@@ -1,28 +1,27 @@
 'use client'
-import React, {useEffect, useState} from 'react';
-import data from '../../../gifs.json'
+import React, {useEffect} from 'react';
+import Searchbar from "@/components/layout/Searchbar/Searchbar";
 import Card from "@/components/Card/Card";
+import {Gif} from "@/types/Gif";
+import {useGifStore} from "@/store/store";
 
 const Main = () => {
-    const [gifs, setGifs] = useState(JSON.parse(JSON.stringify(data.results)));
-
-    const getGifs = async () => {
-        await fetch('https://tenor.googleapis.com/v2/search?q=excited&key=AIzaSyCR1oAN_7I9eFkqtiB1Ea_8keMdJgYkOPk&client_key=my_test_app&limit=20')
-            .then(res => res.json())
-            .then(data => setGifs(data.results))
-            .catch(err => console.log(err));
-    }
+    const {gifs, fetchTrending, isLoading, error} = useGifStore();
 
     useEffect(() => {
-        getGifs().then(() =>
-            console.log('Gifs loaded'))
-    }, [])
+        fetchTrending()
+    }, [fetchTrending])
 
     return (
         <main>
-            {gifs.map((gif) => (
-                <Card key={gif.id} gif={gif}/>
-            ))}
+            <Searchbar/>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>Error...</p>}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                {gifs.map((gif: Gif) => (
+                    <Card key={gif.id} gif={gif}/>
+                ))}
+            </div>
         </main>
     );
 };
