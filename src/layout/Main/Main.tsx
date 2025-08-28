@@ -32,7 +32,11 @@ const Main = () => {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && hasMore && !isLoading) {
-                    currentQuery ? fetchMoreSearch() : fetchMoreTrending();
+                    if (currentQuery) {
+                        fetchMoreSearch();
+                    } else {
+                        fetchMoreTrending();
+                    }
                 }
             },
             { threshold: 1.0 }

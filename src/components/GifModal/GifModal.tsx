@@ -17,9 +17,9 @@ type GifModalProps = {
 };
 
 const GifModal = ({ gif, onClose }: GifModalProps) => {
-    if (!gif) return null;
-
     const [toast, setToast] = useState<string | null>(null);
+
+    if (!gif) return null;
 
     const handleCopy = async () => {
         if (gif.media_formats.gif?.url) {

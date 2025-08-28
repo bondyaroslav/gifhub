@@ -15,6 +15,7 @@ export async function searchGif(query: string, pos?: string, limit: number = 12)
         });
         return res.data;
     } catch (error) {
+        console.error("searchGif failed:", error);
         throw new Error("Failed to fetch gifs");
     }
 }
@@ -31,6 +32,7 @@ export async function getTrendingGifs(pos?: string, limit: number = 12) {
         });
         return res.data;
     } catch (error) {
+        console.error("getTrendingGifs failed:", error);
         throw new Error("Failed to fetch trending gifs");
     }
 }
