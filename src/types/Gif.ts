@@ -10,7 +10,7 @@ export interface Gif {
     content_description: string;
     url?: string;
     media_formats: {
-        gif: GifFormat;         // ✅ тепер обов’язковий
+        gif: GifFormat;
         tinygif?: GifFormat;
         nanogif?: GifFormat;
     };
