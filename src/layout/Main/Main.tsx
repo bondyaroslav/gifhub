@@ -1,9 +1,10 @@
 'use client'
 import React, {useEffect} from 'react';
-import Searchbar from "@/components/layout/Searchbar/Searchbar";
+import Searchbar from "@/components/Searchbar/Searchbar";
 import Card from "@/components/Card/Card";
 import {Gif} from "@/types/Gif";
 import {useGifStore} from "@/store/store";
+import {GifGrid, MainContainer} from "@/layout/Main/Main.styles";
 
 const Main = () => {
     const {gifs, fetchTrending, isLoading, error} = useGifStore();
@@ -12,17 +13,21 @@ const Main = () => {
         fetchTrending()
     }, [fetchTrending])
 
+    console.log(gifs)
+
     return (
-        <main>
+        <MainContainer>
             <Searchbar/>
+
             {isLoading && <p>Loading...</p>}
             {error && <p>Error...</p>}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+
+            <GifGrid>
                 {gifs.map((gif: Gif) => (
                     <Card key={gif.id} gif={gif}/>
                 ))}
-            </div>
-        </main>
+            </GifGrid>
+        </MainContainer>
     );
 };
 

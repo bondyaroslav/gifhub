@@ -2,10 +2,11 @@
 import React from 'react';
 import {useState} from "react";
 import {useGifStore} from "@/store/store";
+import {SearchForm, SearchInput, SearchButton} from "./Searchbar.styles";
 
 const Searchbar = () => {
     const [query, setQuery] = useState("");
-    const {search, isLoading, error} = useGifStore();
+    const {search} = useGifStore();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,20 +16,16 @@ const Searchbar = () => {
 
     return (
         <div>
-            <form onSubmit={handleSearch} className="flex gap-2">
-                <input
-                    className="border p-2 rounded w-full"
+            <SearchForm onSubmit={handleSearch}>
+                <SearchInput
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search GIFs..."
                 />
-                <button type="submit" className="bg-blue-600 text-white px-4 rounded">
+                <SearchButton type="submit" className="bg-blue-600 text-white px-4 rounded">
                     Search
-                </button>
-            </form>
-
-            {isLoading && <p>Loading...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+                </SearchButton>
+            </SearchForm>
         </div>
     );
 };

@@ -1,10 +1,17 @@
+export interface GifFormat {
+    url: string;
+    dims: [number, number];
+    size?: number;
+}
+
 export interface Gif {
-    id: number,
-    title?: string,
-    url: string,
+    id: string;
+    title?: string;
+    content_description: string;
+    url?: string;
     media_formats: {
-        gif: { url: string };
-        tinygif: { url: string };
-        nanogif: { url: string };
+        gif: GifFormat;         // ✅ тепер обов’язковий
+        tinygif?: GifFormat;
+        nanogif?: GifFormat;
     };
 }

@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
-import Header from "@/components/layout/Header/Header";
-import Main from "@/components/layout/Main/Main";
+import Header from "@/layout/Header/Header";
+import Main from "@/layout/Main/Main";
 
 export default function Home() {
 
