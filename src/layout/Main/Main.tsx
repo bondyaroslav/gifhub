@@ -1,10 +1,11 @@
 "use client";
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Searchbar from "@/components/Searchbar/Searchbar";
 import Card from "@/components/Card/Card";
-import {Gif} from "@/types/Gif";
-import {useGifStore} from "@/store/store";
-import {GifGrid, MainContainer} from "@/layout/Main/Main.styles";
+import GifModal from "@/components/GifModal/GifModal";
+import { Gif } from "@/types/Gif";
+import { useGifStore } from "@/store/store";
+import { GifGrid, MainContainer } from "@/layout/Main/Main.styles";
 
 const Main = () => {
     const {
@@ -15,8 +16,10 @@ const Main = () => {
         currentQuery,
         isLoading,
         error,
-        hasMore
+        hasMore,
     } = useGifStore();
+
+    const [selectedGif, setSelectedGif] = useState<Gif | null>(null);
     const observerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -32,7 +35,7 @@ const Main = () => {
                     currentQuery ? fetchMoreSearch() : fetchMoreTrending();
                 }
             },
-            {threshold: 1.0}
+            { threshold: 1.0 }
         );
 
         observer.observe(observerRef.current);
@@ -41,18 +44,23 @@ const Main = () => {
 
     return (
         <MainContainer>
-            <Searchbar/>
+            <Searchbar />
 
             {isLoading && <p>Loading...</p>}
             {error && <p>{error}</p>}
 
             <GifGrid>
                 {gifs.map((gif: Gif) => (
-                    <Card key={gif.id} gif={gif}/>
+                    <div key={gif.id} onClick={() => setSelectedGif(gif)}>
+                        <Card gif={gif} />
+                    </div>
                 ))}
             </GifGrid>
 
-            <div ref={observerRef} style={{height: 1}}/>
+            <div ref={observerRef} style={{ height: 1 }} />
+
+            {/* модалка */}
+            <GifModal gif={selectedGif} onClose={() => setSelectedGif(null)} />
         </MainContainer>
     );
 };
